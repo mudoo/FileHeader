@@ -14,6 +14,12 @@
                         "children":
                         [
                             {
+                                "command": "open_dir",
+                                "args": {"dir": "${packages}/User/FileHeader/template"},
+                                "caption": "Templates"
+                            },
+                            { "caption": "-" },
+                            {
                                 "command": "open_file",
                                 "args": {"file": "${packages}/FileHeader/FileHeader.sublime-settings"},
                                 "caption": "Settings – Default"
