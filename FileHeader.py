@@ -2,7 +2,7 @@
 # @Author: Lime
 # @Date:   2013-10-28 13:39:48
 # @Last Modified by:   Lime
-# @Last Modified time: 2016-03-06 10:23:52
+# @Last Modified time: 2016-03-08 11:18:33
 
 import os
 import sys
@@ -49,8 +49,15 @@ def plugin_loaded():
 
     PACKAGES_PATH = sublime.packages_path()
     PLUGIN_PATH = os.path.join(PACKAGES_PATH, PLUGIN_NAME)
-    HEADER_PATH = os.path.join(PLUGIN_PATH, 'template/header')
-    BODY_PATH = os.path.join(PLUGIN_PATH, 'template/body')
+    TEMPLATE_PATH = os.path.join(PLUGIN_PATH, 'template')
+    HEADER_PATH = os.path.join(PLUGIN_PATH, 'header')
+    BODY_PATH = os.path.join(PLUGIN_PATH, 'body')
+
+    USER_PATH = os.path.join(PACKAGES_PATH, 'User'+ os.path.sep + PLUGIN_NAME)
+    USER_TEMPLATE_PATH = os.path.join(USER_PATH, 'template')
+    USER_HEADER_PATH = os.path.join(USER_TEMPLATE_PATH, 'header')
+    USER_BODY_PATH = os.path.join(USER_TEMPLATE_PATH, 'body')
+
     INSTALLED_PLGIN_PATH = os.path.abspath(os.path.dirname(__file__))
 
     IS_ST3 = sublime.version() >= '3'
@@ -77,6 +84,16 @@ def plugin_loaded():
         z.close()
 
         shutil.copyfile(INSTALLED_PLGIN_PATH, _)
+
+    # copy template to user dir
+    if not os.path.exists(USER_PATH):
+        os.mkdir(USER_PATH)
+    if not os.path.exists(USER_TEMPLATE_PATH):
+        shutil.copytree(TEMPLATE_PATH, USER_TEMPLATE_PATH)
+
+    # set template path
+    HEADER_PATH = USER_HEADER_PATH
+    BODY_PATH = USER_BODY_PATH
 
 
 def getOutputError(cmd):
